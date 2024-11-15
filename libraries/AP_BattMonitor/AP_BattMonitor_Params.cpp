@@ -150,14 +150,16 @@ const AP_Param::GroupInfo AP_BattMonitor_Params::var_info[] = {
     AP_GROUPINFO("ARM_MAH", 19, AP_BattMonitor_Params, _arming_minimum_capacity, 0),
 
     // 20 was BUS
+#endif // HAL_BUILD_AP_PERIPH
 
+#if !defined(HAL_BUILD_AP_PERIPH) || AP_BATTERY_SUM_ENABLED
     // @Param: OPTIONS
     // @DisplayName: Battery monitor options
     // @Description: This sets options to change the behaviour of the battery monitor
     // @Bitmask: 0:Ignore DroneCAN SoC, 1:MPPT reports input voltage and current, 2:MPPT Powered off when disarmed, 3:MPPT Powered on when armed, 4:MPPT Powered off at boot, 5:MPPT Powered on at boot, 6:Send resistance compensated voltage to GCS, 7:Allow DroneCAN InfoAux to be from a different CAN node, 9:Sum monitor measures minimum voltage instead of average
     // @User: Advanced
     AP_GROUPINFO("OPTIONS", 21, AP_BattMonitor_Params, _options, 0),
-#endif // HAL_BUILD_AP_PERIPH
+#endif
 
 #if AP_BATTERY_ESC_TELEM_OUTBOUND_ENABLED
     // @Param: ESC_INDEX
@@ -167,15 +169,6 @@ const AP_Param::GroupInfo AP_BattMonitor_Params::var_info[] = {
     // @Increment: 1
     // @User: Advanced
     AP_GROUPINFO("ESC_INDEX", 22, AP_BattMonitor_Params, _esc_telem_outbound_index, 0),
-#endif
-
-#if AP_BATTERY_SUM_ENABLED && defined(HAL_BUILD_AP_PERIPH)
-    // @Param: OPTIONS
-    // @DisplayName: Battery monitor options
-    // @Description: This sets options to change the behaviour of the battery monitor
-    // @Bitmask: 0:Ignore DroneCAN SoC, 1:MPPT reports input voltage and current, 2:MPPT Powered off when disarmed, 3:MPPT Powered on when armed, 4:MPPT Powered off at boot, 5:MPPT Powered on at boot, 6:Send resistance compensated voltage to GCS, 7:Allow DroneCAN InfoAux to be from a different CAN node, 9:Sum monitor measures minimum voltage instead of average
-    // @User: Advanced
-    AP_GROUPINFO("OPTIONS", 21, AP_BattMonitor_Params, _options, 0),
 #endif
 
     AP_GROUPEND
